@@ -1,2 +1,2 @@
 # fast-feet-backend
-🚀 💜Backend FastFeet, final challenge of bootcap GoStack.
+🚀 💜Backend FastFeet, final challenge of bootcamp GoStack.
