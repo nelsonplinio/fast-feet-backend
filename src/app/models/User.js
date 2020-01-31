@@ -20,6 +20,8 @@ class User extends Model {
         user.password_hash = bcrypt.hash(user.password, 8);
       }
     });
+
+    return this;
   }
 
   checkPassword(password) {
