@@ -1,8 +1,8 @@
 import * as Yup from 'yup';
-import Courier from '../models/Courier';
+import Deliveryman from '../models/Deliveryman';
 import File from '../models/File';
 
-class CourierController {
+class DeliverymanController {
   async store(req, res) {
     const schema = Yup.object().shape({
       name: Yup.string().required(),
@@ -18,13 +18,13 @@ class CourierController {
       });
     }
 
-    const courier = await Courier.create(req.body);
+    const deliveryman = await Deliveryman.create(req.body);
 
-    return res.json(courier);
+    return res.json(deliveryman);
   }
 
   async index(req, res) {
-    const couriers = await Courier.findAll({
+    const deliverymans = await Deliveryman.findAll({
       include: [
         {
           model: File,
@@ -34,7 +34,7 @@ class CourierController {
       ],
     });
 
-    return res.json(couriers);
+    return res.json(deliverymans);
   }
 
   async update(req, res) {
@@ -52,15 +52,15 @@ class CourierController {
       });
     }
 
-    const courier = await Courier.findByPk(req.params.id);
+    const deliveryman = await Deliveryman.findByPk(req.params.id);
 
-    if (!courier) {
+    if (!deliveryman) {
       return res.status(404).json({
-        error: 'Courier not found',
+        error: 'Deliveryman not found',
       });
     }
 
-    const { name, email, avatar_id } = await courier.update(req.body);
+    const { name, email, avatar_id } = await deliveryman.update(req.body);
 
     return res.json({
       name,
@@ -70,7 +70,7 @@ class CourierController {
   }
 
   async delete(req, res) {
-    await Courier.destroy({
+    await Deliveryman.destroy({
       where: {
         id: req.params.id,
       },
@@ -80,4 +80,4 @@ class CourierController {
   }
 }
 
-export default new CourierController();
+export default new DeliverymanController();
