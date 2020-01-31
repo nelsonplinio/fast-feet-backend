@@ -18,6 +18,16 @@ class DeliverymanController {
       });
     }
 
+    const develiverymanExists = await Deliveryman.findOne({
+      where: { email: req.body.email },
+    });
+
+    if (develiverymanExists) {
+      return res.status(400).json({
+        error: 'Error already exists.',
+      });
+    }
+
     const deliveryman = await Deliveryman.create(req.body);
 
     return res.json(deliveryman);
