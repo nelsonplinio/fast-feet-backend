@@ -108,3 +108,6 @@ yarn.lock
 
 #env
 *.env
+
+# temp
+tmp
