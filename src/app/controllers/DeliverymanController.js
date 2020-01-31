@@ -24,7 +24,7 @@ class DeliverymanController {
 
     if (develiverymanExists) {
       return res.status(400).json({
-        error: 'Error already exists.',
+        error: 'Error delivery already exists.',
       });
     }
 
