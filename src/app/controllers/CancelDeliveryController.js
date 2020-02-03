@@ -1,5 +1,8 @@
 import DeliveryProblem from '../models/DeliveryProblem';
 import Delivery from '../models/Delivery';
+import Deliveryman from '../models/Deliveryman';
+import Queue from '../../lib/Queue';
+import DeliveryCanceled from '../jobs/DeliveryCanceledMail';
 
 class CancelDeliveryController {
   async store(req, res) {
@@ -16,6 +19,12 @@ class CancelDeliveryController {
         id: problem.delivery_id,
         canceled_at: null,
       },
+      include: [
+        {
+          model: Deliveryman,
+          as: 'deliveryman',
+        },
+      ],
     });
 
     if (!delivery) {
@@ -26,6 +35,11 @@ class CancelDeliveryController {
 
     delivery.update({
       canceled_at: new Date(),
+    });
+
+    Queue.add(DeliveryCanceled.key, {
+      delivery,
+      problem,
     });
 
     return res.json(delivery);
