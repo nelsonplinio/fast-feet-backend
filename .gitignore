@@ -107,7 +107,7 @@ dist
 yarn.lock
 
 #env
-*.env
+.env
 
 # temp
 tmp

@@ -13,9 +13,9 @@ module.exports = {
         references: {
           model: 'recipients',
           key: 'id',
-          onUpdate: 'CASCADE',
-          onDelete: 'CASCADE',
         },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
       },
       deliveryman_id: {
         type: Sequelize.INTEGER,
@@ -23,9 +23,9 @@ module.exports = {
         references: {
           model: 'deliverymans',
           referencesKey: 'id',
-          onUpdate: 'CASCADE',
-          onDelete: 'CASCADE',
         },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
       },
       signature_id: {
         type: Sequelize.INTEGER,
