@@ -26,7 +26,7 @@ routes.post(
 );
 
 routes.post(
-  '/deliveryman/:deliveryman_id/deliveries/:delivery_id/finish',
+  '/deliveryman/:deliveryman_id/deliveries/:delivery_id/finish-delivery',
   upload.single('file'),
   FinishDeliveryController.store
 );
