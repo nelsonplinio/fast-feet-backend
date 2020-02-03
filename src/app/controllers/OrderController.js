@@ -6,7 +6,7 @@ import Deliveryman from '../models/Deliveryman';
 import OrderRegisteredMail from '../jobs/OrderRegisteredMail';
 import Queue from '../../lib/Queue';
 
-class DeliveryController {
+class OrderController {
   async store(req, res) {
     const schema = Yup.object().shape({
       recipient_id: Yup.number().required(),
@@ -37,7 +37,7 @@ class DeliveryController {
   }
 
   async index(req, res) {
-    const deliveries = await Delivery.findAll({
+    const orders = await Delivery.findAll({
       include: [
         {
           model: Recipient,
@@ -77,7 +77,7 @@ class DeliveryController {
         'signature_id',
       ],
     });
-    return res.json(deliveries);
+    return res.json(orders);
   }
 
   async update(req, res) {
@@ -93,32 +93,32 @@ class DeliveryController {
       });
     }
 
-    const delivery = await Delivery.findByPk(req.params.id);
+    const order = await Delivery.findByPk(req.params.id);
 
-    if (!delivery) {
+    if (!order) {
       return res.status(404).json({
         error: 'Delivery not found',
       });
     }
 
-    await delivery.update(req.body);
+    await order.update(req.body);
 
-    return res.json(delivery);
+    return res.json(order);
   }
 
   async delete(req, res) {
-    const delivery = await Delivery.findByPk(req.params.id);
+    const order = await Delivery.findByPk(req.params.id);
 
-    if (!delivery) {
+    if (!order) {
       return res.status(404).json({
         error: 'Delivery not found',
       });
     }
 
-    await delivery.destroy();
+    await order.destroy();
 
     return res.json();
   }
 }
 
-export default new DeliveryController();
+export default new OrderController();
