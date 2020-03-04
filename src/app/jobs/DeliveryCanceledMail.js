@@ -9,7 +9,7 @@ class CancellationMail {
 
   async handle({ data }) {
     const { delivery, problem } = data;
-    console.log(problem);
+
     await Mail.sendMail({
       to: `${delivery.deliveryman.name} <${delivery.deliveryman.email}>`,
       subject: 'Encomenda cancelada',
