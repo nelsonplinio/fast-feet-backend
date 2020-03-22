@@ -9,8 +9,7 @@ class RecipientController {
       name: Yup.string().required(),
       postal_code: Yup.string()
         .required()
-        .min(8)
-        .max(8),
+        .min(8),
       street: Yup.string().required(),
       state: Yup.string().required(),
       city: Yup.string().required(),
@@ -32,8 +31,7 @@ class RecipientController {
       name: Yup.string().required(),
       postal_code: Yup.string()
         .required()
-        .min(8)
-        .max(8),
+        .min(8),
       street: Yup.string().required(),
       state: Yup.string().required(),
       city: Yup.string().required(),
@@ -56,6 +54,14 @@ class RecipientController {
     recipient = await recipient.update(req.body);
 
     return res.json(recipient);
+  }
+
+  async show(req, res) {
+    const { id } = req.params;
+
+    const recipients = await Recipient.findByPk(id);
+
+    return res.json(recipients);
   }
 
   async index(req, res) {

@@ -8,6 +8,24 @@ class Delivery extends Model {
         canceled_at: Sequelize.DATE,
         start_date: Sequelize.DATE,
         end_date: Sequelize.DATE,
+        status: {
+          type: Sequelize.VIRTUAL,
+          get() {
+            if (this.canceled_at) {
+              return 'canceled';
+            }
+
+            if (this.start_date) {
+              return 'withdrawn';
+            }
+
+            if (this.end_date) {
+              return 'delivered';
+            }
+
+            return 'pending';
+          },
+        },
       },
       {
         sequelize,
@@ -31,6 +49,11 @@ class Delivery extends Model {
     this.belongsTo(models.File, {
       foreignKey: 'signature_id',
       as: 'signature',
+    });
+
+    this.belongsTo(models.File, {
+      foreignKey: 'image_id',
+      as: 'image',
     });
   }
 }

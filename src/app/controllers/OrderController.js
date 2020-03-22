@@ -47,6 +47,17 @@ class OrderController {
           [Op.like]: `%${q}%`,
         },
       },
+      attributes: [
+        'id',
+        'product',
+        'canceled_at',
+        'start_date',
+        'end_date',
+        'deliveryman_id',
+        'recipient_id',
+        'signature_id',
+        'status',
+      ],
       include: [
         {
           model: Recipient,
@@ -74,7 +85,20 @@ class OrderController {
           ],
           attributes: ['id', 'name', 'email', 'avatar_id'],
         },
+        {
+          model: File,
+          as: 'signature',
+          attributes: ['id', 'path', 'url'],
+        },
       ],
+    });
+    return res.json(orders);
+  }
+
+  async show(req, res) {
+    const { id } = req.params;
+
+    const order = await Delivery.findByPk(id, {
       attributes: [
         'id',
         'product',
@@ -84,9 +108,49 @@ class OrderController {
         'deliveryman_id',
         'recipient_id',
         'signature_id',
+        'status',
+        'image_id',
+      ],
+      include: [
+        {
+          model: Recipient,
+          as: 'recipient',
+          attributes: [
+            'id',
+            'name',
+            'street',
+            'number',
+            'complement',
+            'state',
+            'city',
+            'postal_code',
+          ],
+        },
+        {
+          model: Deliveryman,
+          as: 'deliveryman',
+          include: [
+            {
+              model: File,
+              as: 'avatar',
+              attributes: ['id', 'name', 'path', 'url'],
+            },
+          ],
+          attributes: ['id', 'name', 'email', 'avatar_id'],
+        },
+        {
+          model: File,
+          as: 'image',
+          attributes: ['id', 'path', 'url'],
+        },
+        {
+          model: File,
+          as: 'signature',
+          attributes: ['id', 'path', 'url'],
+        },
       ],
     });
-    return res.json(orders);
+    return res.json(order);
   }
 
   async update(req, res) {

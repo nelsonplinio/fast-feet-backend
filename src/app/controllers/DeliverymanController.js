@@ -56,13 +56,28 @@ class DeliverymanController {
     return res.json(deliverymans);
   }
 
+  async show(req, res) {
+    const { id } = req.params;
+
+    const deliveryman = await Deliveryman.findByPk(id, {
+      include: [
+        {
+          model: File,
+          as: 'avatar',
+          attributes: ['path', 'name', 'url'],
+        },
+      ],
+    });
+
+    return res.json(deliveryman);
+  }
+
   async update(req, res) {
     const schema = Yup.object().shape({
       name: Yup.string().required(),
       email: Yup.string()
         .email()
         .required(),
-      avatar_id: Yup.number().required(),
     });
 
     if (!(await schema.isValid(req.body))) {
