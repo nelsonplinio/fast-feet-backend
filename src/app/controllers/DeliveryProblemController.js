@@ -1,4 +1,5 @@
 import * as Yup from 'yup';
+
 import DeliveryProblem from '../models/DeliveryProblem';
 import Delivery from '../models/Delivery';
 
@@ -35,6 +36,13 @@ class DeliveryProblemController {
       where: {
         delivery_id: req.params.delivery_id,
       },
+      include: [
+        {
+          model: Delivery,
+          as: 'delivery',
+        },
+      ],
+      order: [['id', 'DESC']],
     });
 
     return res.json(problems);
