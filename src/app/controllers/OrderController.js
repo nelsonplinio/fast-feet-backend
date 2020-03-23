@@ -39,12 +39,57 @@ class OrderController {
   }
 
   async index(req, res) {
-    const { q = '', page = 1 } = req.query;
+    const { q = '', page = 1, status = '' } = req.query;
+
+    let statusWhere;
+
+    switch (status) {
+      case 'canceled': {
+        statusWhere = {
+          canceled_at: {
+            [Op.ne]: null,
+          },
+        };
+        break;
+      }
+
+      case 'withdrawn': {
+        statusWhere = {
+          start_date: {
+            [Op.ne]: null,
+          },
+        };
+        break;
+      }
+
+      case 'delivered': {
+        statusWhere = {
+          end_date: {
+            [Op.ne]: null,
+          },
+        };
+        break;
+      }
+
+      case 'pending': {
+        statusWhere = {
+          start_date: null,
+          canceled_at: null,
+          end_date: null,
+        };
+        break;
+      }
+
+      default: {
+        statusWhere = {};
+      }
+    }
 
     const where = {
       product: {
         [Op.like]: `%${q}%`,
       },
+      ...statusWhere,
     };
 
     const pageSize = 5;
