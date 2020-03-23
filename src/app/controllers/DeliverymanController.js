@@ -36,14 +36,28 @@ class DeliverymanController {
   }
 
   async index(req, res) {
-    const { q = '' } = req.query;
+    const { q = '', page = 1 } = req.query;
+
+    const where = {
+      name: {
+        [Op.like]: `%${q}%`,
+      },
+    };
+
+    const pageSize = 5;
+    const limit = pageSize;
+    const offset = pageSize * (Number(page) - 1);
+
+    let totalPage = await Deliveryman.count({
+      where,
+    });
+
+    totalPage = Math.max(Math.ceil(totalPage / pageSize), 1);
 
     const deliverymans = await Deliveryman.findAll({
-      where: {
-        name: {
-          [Op.like]: `%${q}%`,
-        },
-      },
+      where,
+      limit,
+      offset,
       include: [
         {
           model: File,
@@ -53,7 +67,11 @@ class DeliverymanController {
       ],
     });
 
-    return res.json(deliverymans);
+    return res.json({
+      list: deliverymans,
+      page: Number(page),
+      totalPage,
+    });
   }
 
   async show(req, res) {

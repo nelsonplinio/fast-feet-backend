@@ -39,14 +39,28 @@ class OrderController {
   }
 
   async index(req, res) {
-    const { q = '' } = req.query;
+    const { q = '', page = 1 } = req.query;
+
+    const where = {
+      product: {
+        [Op.like]: `%${q}%`,
+      },
+    };
+
+    const pageSize = 5;
+    const limit = pageSize;
+    const offset = pageSize * (Number(page) - 1);
+
+    let totalPage = await Delivery.count({
+      where,
+    });
+
+    totalPage = Math.max(Math.ceil(totalPage / pageSize), 1);
 
     const orders = await Delivery.findAll({
-      where: {
-        product: {
-          [Op.like]: `%${q}%`,
-        },
-      },
+      where,
+      limit,
+      offset,
       attributes: [
         'id',
         'product',
@@ -92,7 +106,12 @@ class OrderController {
         },
       ],
     });
-    return res.json(orders);
+
+    return res.json({
+      list: orders,
+      page: Number(page),
+      totalPage,
+    });
   }
 
   async show(req, res) {
