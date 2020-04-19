@@ -34,7 +34,7 @@ class DeliveryProblemController {
   async index(req, res) {
     const { page = 1 } = req.query;
 
-    const pageSize = 5;
+    const pageSize = 10;
     const limit = pageSize;
     const offset = pageSize * (Number(page) - 1);
 

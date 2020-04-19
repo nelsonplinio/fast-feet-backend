@@ -3,6 +3,7 @@ import multer from 'multer';
 import multerConfig from './config/multer';
 
 import SessionController from './app/controllers/SessionController';
+import DeliverymanSessionController from './app/controllers/DeliverymanSessionController';
 import RecipientController from './app/controllers/RecipientController';
 import DeliverymanController from './app/controllers/DeliverymanController';
 import ProblemsController from './app/controllers/ProblemsController';
@@ -20,6 +21,7 @@ const routes = Router();
 const upload = multer(multerConfig);
 
 routes.post('/sessions', SessionController.store);
+routes.post('/deliveryman/sessions', DeliverymanSessionController.store);
 
 routes.get('/deliveryman/:deliveryman_id/deliveries', DeliveryController.index);
 

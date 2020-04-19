@@ -15,12 +15,12 @@ class Delivery extends Model {
               return 'canceled';
             }
 
-            if (this.start_date) {
-              return 'withdrawn';
-            }
-
             if (this.end_date) {
               return 'delivered';
+            }
+
+            if (this.start_date) {
+              return 'withdrawn';
             }
 
             return 'pending';

@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "repository": "git@github.com:nelsonplinio/Fast-Feed-Backend.git",
-  "author": "Nelson Plíni <nelsonplinio94@gmail.com>",
+  "author": "Nelson Plínio <nelsonplinio94@gmail.com>",
   "license": "MIT",
   "scripts": {
     "dev": "nodemon src/server.js",
