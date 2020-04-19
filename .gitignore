@@ -111,3 +111,5 @@ yarn.lock
 
 # temp
 tmp
+
+!./tmp/upload/save_in_git
